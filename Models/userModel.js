@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 module.exports = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    _id: Number,
     firstName: {
         type: String,
         required: true
