@@ -38,17 +38,17 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
 // Routes
-server.use(loginRouter);
-server.use(authenticateMW);
-server.use(adminRouter);
-server.use(basicAdminRouter);
+// server.use(loginRouter);
+// server.use(authenticateMW);
+// server.use(adminRouter);
+// server.use(basicAdminRouter);
 server.use(bookRouter)
-server.use(memberRouter);
-server.use(employeeRouter);
+// server.use(memberRouter);
+// server.use(employeeRouter);
 
 // Not Found Middleware
 server.use((request, response) => {
-  response.status(404).json({ data: "NOT FOUND" });
+  response.status(404).json({ data: "Route NOT FOUND" });
 });
 
 // Error handling Middleware
