@@ -2,6 +2,7 @@
 
 const mongoose=require("mongoose");
 const bcrypt = require("bcryptjs");
+const bcrypt = require('bcrypt');
 
 require("./../Models/basicAdminModel");
 
@@ -32,47 +33,58 @@ exports.getAllBasicAdmin= async (request,response,next)=>{
     }
 }
 
-exports.addBasicAdmin = (request, response, next) => {
-    const basicAdmin = new BasicAdminSchema({
-      _id: request.body._id,
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
-      password: request.body.password,
-      birthDate: request.body.birthDate,
-      hireDate: request.body.hireDate,
-      image: request.body.image,
-      salary: request.body.salary,
-    });
-      basicAdmin.save()
-        .then((data) => {
-          response.status(201).json({ data });
-        })
-        .catch((error) => next(error));
+exports.addBasicAdmin = async (request, response, next) => {
+  const hashedPassword = await bcrypt.hash(request.body.password, 10);
+
+  const basicAdmin = new BasicAdminSchema({
+    _id: request.body._id,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
+    password: hashedPassword,
+    birthDate: request.body.birthDate,
+    hireDate: request.body.hireDate,
+    image: request.body.image,
+    salary: request.body.salary,
+  });
+
+  try {
+    const data = await basicAdmin.save();
+    response.status(201).json({ data });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+
+
+exports.updateBasicAdmin = (request, response, next) => {
+  const basicAdminUpdates = {
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
+    password: request.body.password,
+    birthDate: request.body.birthDate,
+    hireDate: request.body.hireDate,
+    image: request.body.image,
+    salary: request.body.salary,
   };
 
-
-
-
-
-  exports.updateBasicAdmin = (request, response, next) => {
-    const basicAdminUpdates = {
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
-      password: request.body.password,
-      birthDate: request.body.birthDate,
-      hireDate: request.body.hireDate,
-      image: request.body.image,
-      salary: request.body.salary,
-    };
-
-    BasicAdminSchema.updateOne({ _id: request.body._id }, { $set: basicAdminUpdates })
-      .then((result) => {
-        response.status(200).json(result);
+  BasicAdminSchema.updateOne({ _id: request.body._id }, { $set: basicAdminUpdates })
+    .then((data) => {
+      if(data.matchedCount==0)
+          {
+              next(new Error("basicAdmin not found"));
+          }
+          else
+          response.status(200).json({data:"updated"});
       })
-      .catch((error) => next(error));
-  };
+      .catch(error=>next(error));
+};
+
+
 
 
 
