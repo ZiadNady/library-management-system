@@ -55,8 +55,7 @@ exports.getByCategoryValidator=[
 exports.updateValidator=[
     param("id").isNumeric().withMessage('id must be number')
     .notEmpty().withMessage('id must not be empty'),
-    body("title").isString().withMessage('title must be string')
-    .notEmpty().withMessage('title must not be empty'),
+    body("title").optional().isString().withMessage('title must be string'),
     body("auther").isString().withMessage('auther must be string')
     .notEmpty().withMessage('auther must not be empty'),
     body("publisher").isString().withMessage('publisher must be string')
