@@ -18,9 +18,18 @@
     "mongoose": "^6.9.2",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-extend-schema": "^1.0.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.21"
   },
   "devDependencies": {
     "morgan": "^1.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZiadNady/library-management-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ZiadNady/library-management-system/issues"
+  },
+  "homepage": "https://github.com/ZiadNady/library-management-system#readme"
 }
