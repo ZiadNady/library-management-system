@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 // const adminRouter = require("./Routers/adminRouter");
 // const basicAdminRouter = require("./Routers/basicAdminRouter");
-// const bookRouter = require("./Routers/bookRouter");
+const bookRouter = require("./Routers/bookRouter");
 const employeeRouter = require("./Routers/employeeRouter");
 // const loginRouter = require("./Routers/loginRouter");
 // const memberRouter = require("./Routers/memberRouter");
@@ -42,13 +42,13 @@ server.use(express.urlencoded({ extended: false }));
 // server.use(authenticateMW);
 // server.use(adminRouter);
 // server.use(basicAdminRouter);
-// server.use(bookRouter)
+server.use(bookRouter)
 // server.use(memberRouter);
 server.use(employeeRouter);
 
 // Not Found Middleware
 server.use((request, response) => {
-  response.status(404).json({ data: "Route not found" });
+  response.status(404).json({ data: "Route NOT FOUND" });
 });
 
 // Error handling Middleware
