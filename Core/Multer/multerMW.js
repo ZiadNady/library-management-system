@@ -1,7 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 
-exports.emloyeeImage = (request, response, next) => {
+module.exports = (request, response, next) => {
   multer({
     storage: multer.diskStorage({
       destination: (request, file, callback) => {
