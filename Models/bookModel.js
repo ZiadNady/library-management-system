@@ -1,7 +1,9 @@
 //import mongoose
 const mongoose = require('mongoose');
 //import mongoose auto increment
-// const autoIncrement = require('mongoose-auto-increment');
+const autoIncrement = require('mongoose-auto-increment');
+//initilaze auto increment
+autoIncrement.initialize(mongoose.connection);
 
 //create book schema 
 const bookSchema = new mongoose.Schema({
@@ -55,12 +57,12 @@ const bookSchema = new mongoose.Schema({
 });
 
 // //auto increment the id
-// bookSchema.plugin(autoIncrement.plugin,{
-//     model: 'book',
-//     field: '_id',
-//     startAt: 1,
-//     incrementBy: 1
-// });
+bookSchema.plugin(autoIncrement.plugin,{
+    model: 'book',
+    field: '_id',
+    startAt: 1,
+    incrementBy: 1
+});
 
 //export the book model
 module.exports = mongoose.model('book', bookSchema);
