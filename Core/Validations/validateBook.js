@@ -20,8 +20,6 @@ exports.postValidator=[
     .notEmpty().withMessage('pages must not be empty'),
     body("NoOfCopies").isNumeric().withMessage('NoOfCopies must be number')
     .notEmpty().withMessage('NoOfCopies must not be empty'),
-    body("Avilable").isNumeric().withMessage('Avilable must be number')
-    .notEmpty().withMessage('Avilable must not be empty'),
     body("shelfNo").isNumeric().withMessage('shelfNo must be number')
     .notEmpty().withMessage('shelfNo must not be empty')
 ];
@@ -56,24 +54,15 @@ exports.updateValidator=[
     param("id").isNumeric().withMessage('id must be number')
     .notEmpty().withMessage('id must not be empty'),
     body("title").optional().isString().withMessage('title must be string'),
-    body("auther").isString().withMessage('auther must be string')
-    .notEmpty().withMessage('auther must not be empty'),
-    body("publisher").isString().withMessage('publisher must be string')
-    .notEmpty().withMessage('publisher must not be empty'),
-    body("PublishingDate").isDate().withMessage('PublishingDate must be date')
-    .notEmpty().withMessage('PublishingDate must not be empty'),
-    body("Category").isString().withMessage('Category must be string')
-    .notEmpty().withMessage('Category must not be empty'),
-    body("Edition").isString().withMessage('Edition must be string')
-    .notEmpty().withMessage('Edition must not be empty'),
-    body("pages").isNumeric().withMessage('pages must be number')
-    .notEmpty().withMessage('pages must not be empty'),
-    body("NoOfCopies").isNumeric().withMessage('NoOfCopies must be number')
-    .notEmpty().withMessage('NoOfCopies must not be empty'),
-    body("Avilable").isNumeric().withMessage('Avilable must be number')
-    .notEmpty().withMessage('Avilable must not be empty'),
-    body("shelfNo").isNumeric().withMessage('shelfNo must be number')
-    .notEmpty().withMessage('shelfNo must not be empty')
+    body("auther").optional().isString().withMessage('auther must be string'),
+    body("publisher").optional().isString().withMessage('publisher must be string'),
+    body("PublishingDate").optional().isDate().withMessage('PublishingDate must be date'),
+    body("Category").optional().isString().withMessage('Category must be string'),
+    body("Edition").optional().isString().withMessage('Edition must be string'),
+    body("pages").optional().isNumeric().withMessage('pages must be number'),
+    body("NoOfCopies").optional().isNumeric().withMessage('NoOfCopies must be number'),
+    body("Avilable").optional().isNumeric().withMessage('Avilable must be number'),
+    body("shelfNo").optional().isNumeric().withMessage('shelfNo must be number')
 ];
 
 
