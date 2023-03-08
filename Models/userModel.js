@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 module.exports = new mongoose.Schema({
-    _id: Number,
     firstName: {
         type: String,
         required: true
