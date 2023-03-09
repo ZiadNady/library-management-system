@@ -8,7 +8,7 @@ const router = express.Router();
 
 router
   .route("/employees")
-  .get(controller.getAllEmployees)
+  .get(controller.getEmployees)
   .post(
     multerMW,
     validateEmployee.validatePostArray,

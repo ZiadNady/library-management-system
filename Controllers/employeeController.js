@@ -5,8 +5,16 @@ require("../Models/employeeModel");
 const EmployeeSchema = mongoose.model("employees");
 const saltRounds = 10;
 
-exports.getAllEmployees = (request, response, next) => {
-  EmployeeSchema.find({})
+exports.getEmployees = (request, response, next) => {
+  if (request.query.firstname === undefined)
+    request.query.firstname = "";
+  if (request.query.lastname === undefined)
+    request.query.lastname = "";
+
+  EmployeeSchema.find({
+    firstName: { $regex: request.query.firstname, $options: "i" },
+    lastName: { $regex: request.query.lastname, $options: "i" }
+  })
     .then((data) => {
       response.status(200).json({ data });
     })
