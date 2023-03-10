@@ -12,16 +12,17 @@ router
   .post(
     multerMW,
     validateEmployee.validatePostArray,
-    validateMW,
+    validateMW.validateImageMW,
     controller.addEmployee
   )
   .patch(
     multerMW,
     validateEmployee.validatePatchArrayAdmin,
-    validateMW,
+    validateMW.validateImageMW,
     controller.updateEmployee
   )
   .delete(
+    multerMW,
     validateEmployee.validateId,
     validateMW,
     controller.deleteEmployee
