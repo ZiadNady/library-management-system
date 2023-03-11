@@ -5,7 +5,6 @@ const bookSchema = require('./../Models/bookModel');
 exports.addNewBook = (req, res,next) => {
     //create new book
     const newBook = new bookSchema({
-        _id: req.body.id,
         title: req.body.title,
         auther: req.body.auther,
         publisher: req.body.publisher,

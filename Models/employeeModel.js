@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 const extendSchema = require("mongoose-extend-schema");
-const autoIncrement = require("mongoose-auto-increment");
+const autoIncrement = require('mongoose-sequence')(mongoose);
 const userSchema = require("./userModel");
-
-// Initialize the autoIncrement plugin
-autoIncrement.initialize(mongoose.connection);
 
 // Create employee schema
 const employeeSchema = extendSchema(userSchema, {
+  _id: Number,
   hireDate: {
     type: Date,
     default: Date.now
@@ -17,10 +15,10 @@ const employeeSchema = extendSchema(userSchema, {
     default: 3500
   },
   notifications: [Object]
-});
+}, { _id: false });
 
 // Add auto increment plugin
-employeeSchema.plugin(autoIncrement.plugin, "employees");
+employeeSchema.plugin(autoIncrement, { id: 'employeeId', inc_field: '_id' });
 
 // Mapping Schema to Model
 mongoose.model("employees", employeeSchema);

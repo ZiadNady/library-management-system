@@ -1,15 +1,14 @@
 //import mongoose
 const mongoose = require("mongoose");
 //import auto increment
-const autoIncrement = require("mongoose-auto-increment");
-//inatioalize autoincrement
-autoIncrement.initialize(mongoose.connection);
+const autoIncrement = require('mongoose-sequence')(mongoose);
 //import usermodel
 const userModel = require("./userModel");
 // import mongoose-extend-schema
 const extendSchema = require("mongoose-extend-schema");
 //create member  schema that extand from usermodel
 const memberSchema = extendSchema(userModel, {
+    _id: Number,
     phoneNumber: {
         type: String,
         required: true
@@ -26,14 +25,8 @@ const memberSchema = extendSchema(userModel, {
         type: Date,
         default: null,
     },
-    
-});
-//add auto increment to member schema
-memberSchema.plugin(autoIncrement.plugin, {
-    model: "members",
-    field: "_id",
-    startAt: 1,
-    incrementBy: 1
-});
+}, { _id: false });
+// Add auto increment plugin
+memberSchema.plugin(autoIncrement, { id: 'memberId', inc_field: '_id' });
 //export member schema
 module.exports = mongoose.model("members", memberSchema);
