@@ -1,17 +1,11 @@
 //import mongoose
 const mongoose = require('mongoose');
 //import mongoose auto increment
-const autoIncrement = require('mongoose-auto-increment');
-//initilaze auto increment
-autoIncrement.initialize(mongoose.connection);
+const autoIncrement = require('mongoose-sequence')(mongoose);
 
 //create book schema 
 const bookSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true,
-        unique: true
-        },
+    _id: Number,
     title:{
         type: String,
         required: true
@@ -54,15 +48,10 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-});
+}, { _id: false });
 
 // //auto increment the id
-bookSchema.plugin(autoIncrement.plugin,{
-    model: 'book',
-    field: '_id',
-    startAt: 1,
-    incrementBy: 1
-});
+bookSchema.plugin(autoIncrement, { id: 'bookId', inc_field: '_id' });
 
 //export the book model
 module.exports = mongoose.model('book', bookSchema);

@@ -1,9 +1,7 @@
 //import mongoose
 const mongoose = require("mongoose");
 //import auto increment
-const autoIncrement = require("mongoose-auto-increment");
-//inatioalize autoincrement
-autoIncrement.initialize(mongoose.connection);
+const autoIncrement = require('mongoose-sequence')(mongoose);
 //import book schema
 const bookSchema = require("./bookModel");
 //import employee schema
@@ -12,6 +10,7 @@ const employeeSchema = require("./employeeModel");
 const memberSchema = require("./memberModel");
 //create usebookschema
 const useBookSchema = new mongoose.Schema({
+    _id: Number,
     bookId: {
         type: Number,
         ref: bookSchema,
@@ -40,15 +39,10 @@ const useBookSchema = new mongoose.Schema({
         enum: ["borrow", "read"],
         required: true
     }
-});
+}, { _id: false });
 
-//add auto increment to usebook schema
-useBookSchema.plugin(autoIncrement.plugin, {
-    model: "useBook",
-    field: "_id",
-    startAt: 1,
-    incrementBy: 1
-});
+// Add auto increment plugin
+useBookSchema.plugin(autoIncrement, { id: 'useBookId', inc_field: '_id' });
 
 
 //create usebook model
