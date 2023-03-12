@@ -7,30 +7,23 @@ const multerMW = require("../Core/Multer/multerMW");
 const router = express.Router();
 
 router("/members")
-                .get(controller.getAllMembers)
-                .post(
-                    multerMW,
-                    validateMember.validatePostArray,
-                    validateMW,
-                    controller.addMember
-                    )
-                .patch(
-                    multerMW,
-                    validateMember.validatePatchArray,
-                    validateMW,
-                    controller.updateMember
-                )
-                .delete(
-                    validateMember.validateId,
-                    validateMw,
-                    controller.deleteMember
-                );
+                .get(controller.getAllMembers);
 
-router.route("/employeed/:id")
+router.route("/members/:id")
                             .get(
                                 validateMember.validateId,
                                 validateMW,
                                 controller.getEmployeeById
-                            ).patch();
+                            )
+                            .post(
+                                
+                            ),
+                            .patch(
+
+                            ),
+                            delete(
+
+                            ),
+router.route("/members/:id/books/:since");
 
 module.exports = router;
