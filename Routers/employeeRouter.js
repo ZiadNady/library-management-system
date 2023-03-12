@@ -8,20 +8,21 @@ const router = express.Router();
 
 router
   .route("/employees")
-  .get(controller.getAllEmployees)
+  .get(controller.getEmployees)
   .post(
     multerMW,
     validateEmployee.validatePostArray,
-    validateMW,
+    validateMW.validateImageMW,
     controller.addEmployee
   )
   .patch(
     multerMW,
     validateEmployee.validatePatchArrayAdmin,
-    validateMW,
+    validateMW.validateImageMW,
     controller.updateEmployee
   )
   .delete(
+    multerMW,
     validateEmployee.validateId,
     validateMW,
     controller.deleteEmployee

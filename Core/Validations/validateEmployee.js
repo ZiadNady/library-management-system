@@ -4,7 +4,6 @@ exports.validatePostArray = [
   body("firstName").isAlpha().withMessage("First name must be alphabetic"),
   body("lastName").isAlpha().withMessage("Last name must be alphabetic"),
   body("email").isEmail().withMessage("Email is not valid"),
-  body("password").isStrongPassword().withMessage("Password must be strong"),
   body("gender")
     .optional()
     .isIn(["male", "female"])

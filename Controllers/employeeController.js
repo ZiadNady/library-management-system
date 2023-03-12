@@ -1,12 +1,21 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const { generatePassword } = require("../Core/Utilities/utilities");
 require("../Models/employeeModel");
 const EmployeeSchema = mongoose.model("employees");
 const saltRounds = 10;
 
-exports.getAllEmployees = (request, response, next) => {
-  EmployeeSchema.find({})
+exports.getEmployees = (request, response, next) => {
+  if (request.query.firstname === undefined)
+    request.query.firstname = "";
+  if (request.query.lastname === undefined)
+    request.query.lastname = "";
+
+  EmployeeSchema.find({
+    firstName: { $regex: request.query.firstname, $options: "i" },
+    lastName: { $regex: request.query.lastname, $options: "i" }
+  })
     .then((data) => {
       response.status(200).json({ data });
     })
@@ -32,7 +41,7 @@ exports.addEmployee = (request, response, next) => {
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
-    tmpPassword: request.body.password,
+    tmpPassword: generatePassword(16),
     gender: request.body.gender,
     birthDate: request.body.birthDate,
     salary: request.body.salary,
@@ -43,6 +52,10 @@ exports.addEmployee = (request, response, next) => {
       response.status(201).json({ data });
     })
     .catch((error) => {
+      fs.unlink(imagePath, (error) => {
+        console.log(error);
+        return;
+      });
       next(error);
     });
 };
@@ -86,6 +99,10 @@ exports.updateEmployee = (request, response, next) => {
       else response.status(200).json({ data: "Employee updated successfully" });
     })
     .catch((error) => {
+      fs.unlink(imagePath, (error) => {
+        console.log(error);
+        return;
+      });
       next(error);
     });
 };
