@@ -1,39 +1,36 @@
-//import mongoose
-const mongoose = require("mongoose");
-//import auto increment
-const autoIncrement = require("mongoose-auto-increment");
-//inatioalize autoincrement
-autoIncrement.initialize(mongoose.connection);
-//import usermodel
-const userModel = require("./userModel");
-// import mongoose-extend-schema
-const extendSchema = require("mongoose-extend-schema");
-//create member  schema that extand from usermodel
-const memberSchema = extendSchema(userModel, {
-    phoneNumber: {
-        type: String,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true
-    },
-    createAt:{
-        type: Date,
-        default: Date.now
-    },
-    preventBorrowUntil: {
-        type: Date,
-        default: null,
-    },
-    
-});
-//add auto increment to member schema
-memberSchema.plugin(autoIncrement.plugin, {
-    model: "members",
-    field: "_id",
-    startAt: 1,
-    incrementBy: 1
-});
-//export member schema
-module.exports = mongoose.model("members", memberSchema);
+const express = require("express");
+const validateMW = require("../Core/Validations/validateMW");
+const controller = require("../Controllers/memberController");
+const validateMember = require("../Core/Validations/validateMember");
+const multerMW = require("../Core/Multer/multerMW");
+
+const router = express.Router();
+
+router("/members")
+                .get(controller.getAllMembers)
+                .post(
+                    multerMW,
+                    validateMember.validatePostArray,
+                    validateMW,
+                    controller.addMember
+                    )
+                .patch(
+                    multerMW,
+                    validateMember.validatePatchArray,
+                    validateMW,
+                    controller.updateMember
+                )
+                .delete(
+                    validateMember.validateId,
+                    validateMw,
+                    controller.deleteMember
+                );
+
+router.route("/employeed/:id")
+                            .get(
+                                validateMember.validateId,
+                                validateMW,
+                                controller.getEmployeeById
+                            ).patch();
+
+module.exports = router;

@@ -1,7 +1,7 @@
 //import mongoose
 const mongoose = require("mongoose");
 //import auto increment
-const autoIncrement = require("mongoose-auto-increment");
+const autoIncrement = require('mongoose-sequence')(mongoose);
 //inatioalize autoincrement
 autoIncrement.initialize(mongoose.connection);
 //import usermodel
@@ -10,13 +10,14 @@ const userModel = require("./userModel");
 const extendSchema = require("mongoose-extend-schema");
 //create member  schema that extand from usermodel
 const memberSchema = extendSchema(userModel, {
+    _id:Number,
     phoneNumber: {
         type: String,
-        required: true
+        required: false
     },
     address: {
-        type: String,
-        required: true
+        type: Object,
+        required: false
     },
     createAt:{
         type: Date,
@@ -27,13 +28,9 @@ const memberSchema = extendSchema(userModel, {
         default: null,
     },
     
-});
+},{_id:false});
+
 //add auto increment to member schema
-memberSchema.plugin(autoIncrement.plugin, {
-    model: "members",
-    field: "_id",
-    startAt: 1,
-    incrementBy: 1
-});
+memberSchema.plugin(autoIncrement, { id:"memberId", inc_field:"_id" });
 //export member schema
-module.exports = mongoose.model("members", memberSchema);
+mongoose.model("members", memberSchema);
