@@ -12,9 +12,11 @@ const router=express.Router();
 // Admin
 router.route("/basicAdmin")
 .get(validateMW,controller.getAllBasicAdmin)
-.post(basicAdminValidate.addBasicAdmin,validateMW,controller.addBasicAdmin)
-.put(basicAdminValidate.updateBasicAdmin,validateMW,controller.updateBasicAdmin)
+.post(validateMW,controller.addBasicAdmin)
+.put(validateMW,controller.updateBasicAdmin)
 .delete(validateMW,controller.deleteBasicAdmin);
+
+router.get("/basicAdmin/:id",validateMW,controller.getOneBasicAdmin);
 
 
 module.exports=router;
