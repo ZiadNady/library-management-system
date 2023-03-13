@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { generatePassword } = require("../Core/Utilities/utilities");
 require("../Models/memberModel");
 const memberSchema = mongoose.model("members");
+const saltRounds = 10;
 
 exports.getAllMembers = (request, response, next)=>{
     memberSchema.find({})
@@ -46,9 +47,9 @@ exports.addMember=(request, response, next)=>{
     next(error);
 }
 
-exports.updateMember(){
+exports.updateMember=(request,response,next)=>{
     if(request.body.password !== undefined){
-        request.body.password = bcrypt.hash(request.body.password);
+        request.body.password = bcrypt.hash(request.body.password, saltRounds);
     }
     memberSchema.findOne({ _id: request.body.id })
     .then((data)=>{
@@ -78,7 +79,7 @@ exports.updateMember(){
     });
 }
 
-exports.deleteMember(){
+exports.deleteMember=(request,response,next)=>{
     memberSchema.findOne({ _id: request.body.id })
     .then((data) => {
         memberSchema.deleteOne({_id: request.body.id});

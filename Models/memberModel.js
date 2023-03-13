@@ -1,15 +1,9 @@
-//import mongoose
 const mongoose = require("mongoose");
-//import auto increment
-const autoIncrement = require('mongoose-sequence')(mongoose);
-//inatioalize autoincrement
-autoIncrement.initialize(mongoose.connection);
-//import usermodel
-const userModel = require("./userModel");
-// import mongoose-extend-schema
 const extendSchema = require("mongoose-extend-schema");
-//create member  schema that extand from usermodel
-const memberSchema = extendSchema(userModel, {
+const autoIncrement = require('mongoose-sequence')(mongoose);
+const userSchema = require("./userModel");
+
+const memberSchema = extendSchema(userSchema, {
     _id:Number,
     phoneNumber: {
         type: String,
