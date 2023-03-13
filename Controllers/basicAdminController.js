@@ -1,8 +1,8 @@
 
 
 const mongoose=require("mongoose");
-const bcrypt = require("bcryptjs");
 const bcrypt = require('bcrypt');
+const { generatePassword } = require("../Core/Utilities/utilities");
 
 require("./../Models/basicAdminModel");
 
