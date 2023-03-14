@@ -11,7 +11,7 @@ router.route("/members")
 
 router.route("/members/:id")
                 .get(
-                    validateMember.validateId,
+                    validateMember.validateIdParam,
                     validateMW,
                     controller.getMemberById
                 )
@@ -21,12 +21,12 @@ router.route("/members/:id")
                     controller.addMember
                 )
                 .patch(
-                    validateMember.validatePostArray,
+                    validateMember.validatePatchArrayMember,
                     validateMW,
                     controller.updateMember
                 )
                 .delete(
-                    validateMember.validateId,
+                    validateMember.validateIdParam,
                     validateMW,
                     controller.deleteMember
                 );

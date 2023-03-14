@@ -63,7 +63,8 @@ exports.updateMember=(request,response,next)=>{
                     gender: request.body.gender,
                     birthDate: request.body.birthDate,
                     phoneNumber: request.body.phoneNumber,
-                    address: request.body.address
+                    address: request.body.address,
+                    preventBorrowUntil: request.boy.preventBorrowUntil
                 }
             }
         )
